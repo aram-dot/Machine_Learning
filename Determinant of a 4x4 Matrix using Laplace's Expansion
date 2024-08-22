@@ -1,0 +1,16 @@
+####
+# Write a Python function that calculates the determinant of a 4x4 matrix using Laplace's Expansion method. 
+# The function should take a single argument, a 4x4 matrix represented as a list of lists, and return the determinant of the matrix. 
+# The elements of the matrix can be integers or floating-point numbers.
+# Implement the function recursively to handle the computation of determinants for the 3x3 minor matrices.
+def determinant_4x4(matrix: list[list[int|float]]) -> float:
+    # Base case: If the matrix is 1x1, return its single element
+    if len(matrix) == 1:
+        return matrix[0][0]
+    # Recursive case: Calculate determinant using Laplace's Expansion
+    det = 0
+    for c in range(len(matrix)):
+        minor = [row[:c] + row[c+1:] for row in matrix[1:]]  # Remove column c
+        cofactor = ((-1)**c) * determinant_4x4(minor)  # Compute cofactor
+        det += matrix[0][c] * cofactor  # Add to running total
+    return det
